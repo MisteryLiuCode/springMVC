@@ -9,7 +9,7 @@
     -->
     <!--<filter>-->
     <!--    <filter-name>MyCharacterFilter</filter-name>-->
-    <!--    <filter-class>com.hspedu.web.filter.MyCharacterFilter</filter-class>-->
+    <!--    <filter-class>com.liu.web.filter.MyCharacterFilter</filter-class>-->
     <!--</filter>-->
     <!--<filter-mapping>-->
     <!--    <filter-name>MyCharacterFilter</filter-name>-->
