@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!--配置自动扫描包-->
+    <context:component-scan base-package="com.liu.web"/>
+
+    <!--配置视图解析器[默认视图解析器]-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <!--配置属性suffix 和 prefix-->
+        <property name="prefix" value="/WEB-INF/pages/"/>
+        <property name="suffix" value=".jsp"/>
+        <!--调整优先级-->
+        <property name="order" value="10"/>
+    </bean>
+
+    <!--
+        老师解读
+        1. 配置自定义视图解析器BeanNameViewResolver
+        2. BeanNameViewResolver可以去解析我们自定义的视图
+        3. 配置 属性 order, 表示视图解析器执行的顺序, 值越小, 优先级越高
+        4. 属性 order 的默认值是最低优先级 ，值为 Integer.MAX_VALUE
+           int LOWEST_PRECEDENCE = 2147483647
+    -->
+    <bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+        <property name="order" value="99"/>
+    </bean>
+
+    <!-- 配置国际化错误信息的资源处理bean -->
+    <bean id="messageSource" class=
+            "org.springframework.context.support.ResourceBundleMessageSource">
+        <!-- 配置国际化文件名字
+            如果你这样配的话，表示messageSource回到 src/i18nXXX.properties去读取错误信息
+         -->
+        <property name="basename" value="i18n"></property>
+    </bean>
+
+    <!--配置文件上传需要的bean-->
+    <bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+          id="multipartResolver"/>
+
+
+    <!--配置自定义拦截器-spring配置文件-->
+<!--    <mvc:interceptors>-->
+        <!--
+        老韩解读
+        1. 第一种配置方式
+        2. 使用ref 引用到对应的myInterceptor01
+        3. 这种方式，会拦截所有的目标方法
+        -->
+        <!--<ref bean="myInterceptor01"/>-->
+
+        <!--老韩解读
+        1. 第二种配置方式
+        2. mvc:mapping path="/hi" 指定要拦截的路径
+        3. ref bean="myInterceptor01" 指定对哪个拦截器进行配置
+        -->
+        <!--<mvc:interceptor>-->
+        <!--    <mvc:mapping path="/hi"/>-->
+        <!--    <ref bean="myInterceptor01"/>-->
+        <!--</mvc:interceptor>-->
+
+        <!--老韩解读
+        1. 第3种配置方式
+        2. mvc:mapping path="/h*" 通配符方式 表示拦截 /h 打头的路径
+        3. mvc:exclude-mapping path="/hello" /hello不拦截
+        4. ref bean="myInterceptor01" 指定对哪个拦截器配置
+        -->
+<!--        <mvc:interceptor>-->
+<!--            <mvc:mapping path="/h*"/>-->
+<!--            <mvc:exclude-mapping path="/hello"/>-->
+<!--            <ref bean="myInterceptor01"/>-->
+<!--        </mvc:interceptor>-->
+
+        <!--老师解读
+        1.配置的第二个拦截器
+        2.多个拦截器在执行时，是顺序执行
+        -->
+<!--        <mvc:interceptor>-->
+<!--            <mvc:mapping path="/h*"/>-->
+<!--            <ref bean="myInterceptor02"/>-->
+<!--        </mvc:interceptor>-->
+<!--    </mvc:interceptors>-->
+
+
+    <!--配置统一处理异常Bean-->
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <props>
+                <!--<prop key="java.lang.ArrayIndexOutOfBoundsException">arrEx</prop>-->
+                <!--<prop key="java.lang.Exception">allEx</prop>-->
+            </props>
+        </property>
+    </bean>
+
+
+
+    <!--加入两个常规配置-->
+    <!--支持SpringMVC的高级功能，比如JSR303校验, 映射动态请求-->
+    <mvc:annotation-driven></mvc:annotation-driven>
+    <!--将springmvc不能处理的请求，交给tomcat处理,比如css, js-->
+    <mvc:default-servlet-handler/>
+</beans>
