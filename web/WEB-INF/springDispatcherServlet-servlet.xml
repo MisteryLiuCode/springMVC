@@ -29,14 +29,7 @@
         <property name="order" value="99"/>
     </bean>
 
-    <!-- 配置国际化错误信息的资源处理bean -->
-    <bean id="messageSource" class=
-            "org.springframework.context.support.ResourceBundleMessageSource">
-        <!-- 配置国际化文件名字
-            如果你这样配的话，表示messageSource回到 src/i18nXXX.properties去读取错误信息
-         -->
-        <property name="basename" value="i18n"></property>
-    </bean>
+
 
     <!--配置文件上传需要的bean-->
     <bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
