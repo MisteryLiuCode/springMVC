@@ -104,7 +104,6 @@ public class VoteHandler {
      * 老韩解读
      * 1. 演示将提交的数据->springmvc封装到java对象->springmvc 会自动的将其放入到request域
      * 2. 这样我们就可以在跳转到的页面取出数据.
-     *
      * @return
      */
     @RequestMapping(value = "/vote05")
@@ -116,6 +115,7 @@ public class VoteHandler {
         request.setAttribute("address", "beijing");
         //3. 如果我们希望修改master的属性值
         master.setName("nono");
+        master.getPet().setName("修改后的宠物名称");
         //4. 分析一下springmvc默认存放对象到request域中,属性名是
         //   request域 ("master", master) 属性名是类名/类型名 首字母小写
         //返回到一个结果
@@ -135,6 +135,7 @@ public class VoteHandler {
         //2. 原理分析：springmvc会遍历map，然后将map的k-v, 存放到request域
         map.put("address", "beijing...");
 
+//        如果直接替换master为null,就取不出来了
         //map.put("master", null);
         //返回到一个结果
         return "vote_ok";
@@ -171,7 +172,6 @@ public class VoteHandler {
         //我们将master对象放入到session域
         httpSession.setAttribute("master", master);
         httpSession.setAttribute("address", "guangzhou");
-
         return "vote_ok";//请求转发
     }
     /**
