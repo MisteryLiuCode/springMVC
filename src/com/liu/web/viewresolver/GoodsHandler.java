@@ -27,16 +27,16 @@ public class GoodsHandler {
         System.out.println("=======order()=====");
         //请求转发到 /WEB-INF/pages/my_view.jsp
         //下面的 /WEB-INF/pages/my_view.jsp 被解析成 /springmvc/WEB-INF/pages/my_view.jsp
-        //return "forward:/WEB-INF/pages/my_view.jsp";
-        //return "forward:/aaa/bbb/ok.jsp";
+        return "forward:/WEB-INF/pages/my_view.jsp";
+//        return "forward:/aaa/bbb/ok.jsp";
 
         //直接指定要重定向的页面
         //1. 对于重定向来说，不能重定向到 /WEB-INF/ 目录下
         //2. redirect 关键字，表示进行重定向
         //3. /login.jsp 在服务器解析 /springmvc/login.jsp
-        return "redirect:/login.jsp";
+//        return "redirect:/login.jsp";
 
         // /WEB-INF/pages/my_view.jsp 被解析 /springmvc/WEB-INF/pages/my_view.jsp
-        //return "redirect:/WEB-INF/pages/my_view.jsp";
+//        return "redirect:/WEB-INF/pages/my_view.jsp";
     }
 }
